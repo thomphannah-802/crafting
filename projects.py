@@ -7,7 +7,7 @@ A project has two stages:
 
 Actual yardage is derived from actual_weight_grams using the warp yarn's
 yards_per_pound (stored at save time). For multi-weft projects this is an
-estimate, which is fine — see README for rationale.
+estimate.
 
 Disposition options: "gift", "for_sale", "personal_keep", "sample"
 """
