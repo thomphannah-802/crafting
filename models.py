@@ -1,6 +1,7 @@
 """
 Data models for the warp calculator reference layer.
-All reference data (looms, yarns, weave structures) lives here as dataclasses.
+Data models for craft project tracker
+All reference data lives here as dataclasses for both warp calculator and project tracker
 """
 
 from dataclasses import dataclass, field
@@ -111,12 +112,15 @@ class StashYarn:
     Identifies a yarn by its technical size AND optionally by brand/product.
 
     size_notation : industry shorthand, "lace", "fingering", "dk", etc
-    fiber         : fiber type, e.g. "cotton", "wool", "linen", "tencel"
+    fiber         : single word fiber type, ("cotton", "wool", "linen", "tencel")
     wraps_per_inch: how many wraps fit in one inch (used for size estimation)
     yards_per_100g: total yardage per 100g (used for yardage/weight calc)
     yarn_weight_grams: yarn weight in grams
-    brand         : (optional) brand name, e.g. "Republica Unicornia" "Yarnaceous" etc
-    id            : database id automatically assigned?
+    brand         : (optional) brand name, ("Republica Unicornia" "Yarnaceous")
+    yarn_content  : if fiber content is anything particularly detailed ("80% bfl, 20% tencel")
+    handspun      : boolean is or is not handspun (implication spun by me)
+    hand_dyed     : boolean is/is not hand-dyed by me, does not include other indie dyers
+    id            : database id automatically assigned
     yarn_notes    : (optional) notes
     """
     size_notation: str
@@ -131,16 +135,16 @@ class StashYarn:
     yarn_notes: Optional[str] = None
 
 
-# Bridge class to connect KnitProject and StashYarn. 
+# ProjectYarn connects KnitProject and StashYarn when a yarn is assigned to a project 
 
 @dataclass
 class ProjectYarn:
     """
-    starting_weight: weight in grams of yarn at start of project
-    ending_weight: Weight in grams of yarn at end of project
-    grams_used: calculated field difference between ending and starting weight
-    stash_id: id of StashYarn entry
-    project_id: id of KnitProject entry
+    starting_weight   : weight in grams of yarn at start of project
+    ending_weight     : Weight in grams of yarn at end of project
+    stash_id          : id of StashYarn entry
+    project_id        : id of KnitProject entry
+    color_role        : "MC" "CC" or other descriptor in colorwork project 
     """
 
     starting_weight: float
@@ -162,12 +166,14 @@ class KnitProject:
     """
     gives information on project
 
-    project_name  : self-named project title
-    pattern_name  : name from ravelry or other source
-    pattern_source: ravelry, book, etc
-    gauge         : (optional) stitches x rows
-    made_for      : gift, self, etc
-    project_notes : (optional) notes
+    project_name    : self-named project title
+    pattern_name    : name from ravelry or other source
+    pattern_source  : ravelry, book, etc
+    gauge           : (optional) stitches x rows
+    made_for        : gift, self, person etc
+    project_notes   : (optional) notes
+    date_started    : yyyy-mm-dd
+    date_completed  : yyyy-mm-dd
     """
     
     project_name: str
@@ -183,7 +189,21 @@ class KnitProject:
 @dataclass
 class SpinProject:
     """
-    
+    Information on Spinning Projects
+    project_name      : self-named project title
+    weight_grams      : weight in grams when complete
+    fiber_content     : if known, estimates if self-blended
+    plies             : number of plies in yarn
+    measured_yards    : measured from niddy-noddy or yardage counter
+    twist             : recorded in degrees of twist
+    date_started      : yyyy-mm-dd
+    date_completed    : yyyy-mm-dd
+    project_notes     : Any relevant information
+    id                : assigned automatically
+    stash_id          : id assigned within stash
+    tool_id           : Tool used to create yarn
+    fiber_prep_id     : Fiber preparation used to create yarn
+    spin_style_id     : Spinning style used to create yarn 
     """
 
     project_name: str
@@ -203,6 +223,13 @@ class SpinProject:
 
 @dataclass
 class SpinningTool:
+    """
+    Pre-saved spinning tools
+    name        : Name of tool (Lendrum, Ladybug, Narwhal Spindle, etc)
+    tool_type   : "wheel" "spindle" or even more specific "castle wheel" etc
+    notes       : anything relevant about tool
+    id          : assigned
+    """    
     name: str                   
     tool_type: str               # "wheel" or "spindle"
     notes: Optional[str] = None
@@ -210,12 +237,24 @@ class SpinningTool:
 
 @dataclass
 class FiberPrep:
+    """
+    Fiber prep describes how the fiber was prepared for spinning
+    name     : combed top, batt, rolag, etc
+    notes    : anything relevant about prep
+    id       : assigned
+    """
     name: str                    # "combed top", "batt", "rolag"
     notes: Optional[str] = None
     id: Optional[int] = None
 
 @dataclass
 class SpinStyle:
+    """
+    Spin style describes how the yarn was spun, which hand techniques were used
+    name     : long draw, short forward draw, corespun, etc
+    notes    : anythign relevant about technique
+    id       : assigned
+    """
     name: str                    # "long draw", "short forward draw"
     notes: Optional[str] = None
     id: Optional[int] = None
