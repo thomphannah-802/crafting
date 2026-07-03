@@ -16,13 +16,11 @@ from models import Loom, Yarn, WeaveStructure, SpinningTool, FiberPrep, SpinStyl
 
 # ---------------------------------------------------------------------------
 # DEFAULT LOOMS
-# Empty — you said you'd define your own. The app will prompt you to add
-# your first loom on startup if the table is empty.
 # ---------------------------------------------------------------------------
-#  id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+#    id                  INTEGER PRIMARY KEY AUTOINCREMENT,
 #    name                TEXT    NOT NULL UNIQUE,
- #   max_weaving_width   REAL    NOT NULL,
-  #  loom_waste          REAL    NOT NULL
+#    max_weaving_width   REAL    NOT NULL,
+#    loom_waste          REAL    NOT NULL
 
 DEFAULT_LOOMS: list[Loom] = [
     Loom("Schacht Standard", max_weaving_width=30, loom_waste=30),
@@ -32,7 +30,7 @@ DEFAULT_LOOMS: list[Loom] = [
 
 # ---------------------------------------------------------------------------
 # DEFAULT YARNS
-# Organized by fiber, then size (coarsest → finest)
+# Organized by fiber, then weight (coarsest → finest)
 # WPI values are mid-range; individual skeins vary slightly.
 # ---------------------------------------------------------------------------
 
