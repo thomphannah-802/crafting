@@ -1,9 +1,12 @@
 """
 Default reference data seeded into the database on first run.
 
-Looms    : empty — user defines their own (as requested)
-Yarns    : common weaving yarns with accurate WPI and yards/pound
-Structures: basic structures with standard sett multipliers
+Looms           : all looms currently owned
+Yarns           : common weaving yarns with accurate WPI and yards/pound
+Structures      : basic structures with standard sett multipliers
+SpinningTool    : spinning tools currently owned and used regularly
+FiberPrep       : Fiber preparations commonly used
+SpinStyle       : spinning styles commonly used
 
 Sources for yarn specs:
   - Ashford/Brassard published yardage tables
