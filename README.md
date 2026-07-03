@@ -39,6 +39,10 @@ To reflect the way I used my historic trackers, I built the project records to h
 
 For weaving projects, the physical yarn weight (measured traditionally as yards-per-pound) is recorded at the time of project save, during the planning time. This means that if the yarn reference table is ever updated or changes, the historic yardage stays accurate.
 
+#### Weft Estimates
+
+In a multi-weft project (like overshot or any scrappy project) I chose to calculate final weft yardage based on an average of the various wraps per inch and yardage per pound. For my purposes this works fine, I'm not needing perfection and my final numbers are intended for personal use, not for industrial or serious economical application.
+
 #### SQLite:
 Because the only person who will be using this local database is myself, I chose SQLite to keep the tool portable and with zero infrastructure.
 
