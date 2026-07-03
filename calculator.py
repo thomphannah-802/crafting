@@ -1,3 +1,6 @@
+# Note only a few warp structures are loaded, will add more as I learn. 
+#
+
 """
 calculator.py — warp and weft planning math
 
@@ -9,8 +12,8 @@ Key concepts:
   - hem_allowance     : extra length woven on each end, folds under (inches)
   - fringe            : optional; extra warp length left unwoven (inches per end)
   - gap_allowance     : space left between pieces on a shared warp (default 1")
-  - take_up_pct       : combined take-up + shrinkage as a decimal (e.g. 0.15 = 15%)
-  - loom_waste        : pulled from the loom object (front + back beam waste)
+  - take_up_pct       : combined take-up + shrinkage as a decimal (percentage)
+  - loom_waste        : pulled from the loom (front + back beam waste)
 
 Warp length per piece formula:
     woven_length  = (finished_length / (1 - take_up_pct)) + (hem_allowance * 2)
@@ -43,9 +46,9 @@ from typing import Optional
 from models import Loom, Yarn, WeaveStructure
 
 
-# ---------------------------------------------------------------------------
+# ------------------------------------------------------------------
 # Weft yarn definition
-# ---------------------------------------------------------------------------
+# -----------------------------------------------------------------------
 
 @dataclass
 class WeftYarn:
@@ -74,8 +77,8 @@ class WeftYarn:
 
 
 # ---------------------------------------------------------------------------
-# Input: one piece on the warp
-# ---------------------------------------------------------------------------
+# Input: one piece on the warp (one tea towel, one mug rug, etc)
+# ---------------------------------------------------------------------
 
 @dataclass
 class WarpPiece:
@@ -130,9 +133,9 @@ class WarpPiece:
             )
 
 
-# ---------------------------------------------------------------------------
+# ------------------------------------------------------------------------
 # Input: full warp plan parameters
-# ---------------------------------------------------------------------------
+# --------------------------------------------------------------------
 
 @dataclass
 class WarpParameters:
@@ -161,7 +164,7 @@ class WarpParameters:
 
 # ---------------------------------------------------------------------------
 # Output: fully calculated warp plan
-# ---------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 
 @dataclass
 class WarpPlan:
@@ -300,7 +303,7 @@ def _calc_piece(
 
     # --- weft contribution ---
     # weft draw-in: weft yarn travels over/under ends so uses slightly more
-    # than the weaving width — we use take_up_pct as the draw-in factor
+    # than the weaving width — use take_up_pct as the draw-in factor
     weft_width_yards = (warp_width * (1 + take_up_pct)) / 36
 
     weft_breakdown = []
